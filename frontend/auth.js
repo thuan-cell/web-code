@@ -1,66 +1,72 @@
-// Thay bằng thông tin Supabase thật của bạn
-const SUPABASE_URL = 'https://sbujprduupfyohscibck.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNidWpwcmR1dXBmeW9oc2NpYmNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1MDA1NDEsImV4cCI6MjA2NDA3NjU0MX0.nC7tUGNg8kUvKXdtNtaKZzpAyoLgMNBbCe4dXXx2VyE';
+// auth.js
 
-// Tạo client supabase
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabaseUrl = 'https://ngccjkcvbrzhrghrehlr.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5nY2Nqa2N2YnJ6aHJnaHJlaGxyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1MjM1NDUsImV4cCI6MjA2NDA5OTU0NX0.AozgdihQHsyPsDyh0OX85sGEeIvxa2IxXf0PQPYlte4'; // Thay bằng anon key thật
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-// Hiển thị popup alert với SweetAlert2
 function showAlert(type, message) {
-  return Swal.fire({
-    icon: type,
-    text: message,
-    confirmButtonColor: '#4e54c8'
-  });
+  Swal.fire({ icon: type, text: message, confirmButtonColor: '#4e54c8' });
 }
 
-// Chuyển form Đăng nhập <=> Đăng ký
-function toggleForm() {
+function showLoading(message = 'Đang xử lý...') {
+  Swal.fire({ title: message, allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+}
+
+function closeAlert() {
+  Swal.close();
+}
+
+function toggleForm(event) {
   const loginForm = document.getElementById('login-form');
   const signupForm = document.getElementById('signup-form');
-  if (loginForm.style.display === 'none') {
-    loginForm.style.display = 'block';
-    signupForm.style.display = 'none';
-  } else {
-    loginForm.style.display = 'none';
+  const loggedInState = document.getElementById('logged-in-state');
+  loginForm.style.display = 'none';
+  signupForm.style.display = 'none';
+  loggedInState.style.display = 'none';
+
+  if (event.target.id === 'toggle-to-signup') {
     signupForm.style.display = 'block';
+  } else {
+    loginForm.style.display = 'block';
   }
 }
 
-// Đăng ký
+function showLoggedInState() {
+  document.getElementById('login-form').style.display = 'none';
+  document.getElementById('signup-form').style.display = 'none';
+  document.getElementById('logged-in-state').style.display = 'block';
+}
+
+async function insertProfile(user_id, fullname, email) {
+  await supabase.from("profiles").insert([{ id: user_id, fullname, email }]);
+}
+
 async function signUp() {
   const fullname = document.getElementById("signup-fullname").value.trim();
   const email = document.getElementById("signup-email").value.trim();
   const password = document.getElementById("signup-password").value.trim();
 
-  if (!fullname) {
-    showAlert("warning", "Vui lòng nhập họ và tên.");
-    return;
-  }
-  if (!email || !password) {
-    showAlert("warning", "Vui lòng nhập đầy đủ email và mật khẩu.");
+  if (!fullname || !email || !password) {
+    showAlert("warning", "Vui lòng điền đầy đủ thông tin.");
     return;
   }
 
-  const { data, error } = await supabaseClient.auth.signUp({
-    email,
-    password,
-    options: {
-      data: {
-        full_name: fullname
-      }
-    }
-  });
+  showLoading("Đang đăng ký...");
+  const { data, error } = await supabase.auth.signUp({ email, password });
 
   if (error) {
+    closeAlert();
     showAlert("error", error.message);
   } else {
-    await showAlert("success", "Tạo tài khoản thành công! Vui lòng kiểm tra email để xác nhận.");
-    toggleForm();
+    const userId = data.user?.id;
+    if (userId) await insertProfile(userId, fullname, email);
+    closeAlert();
+    showAlert("success", "Đăng ký thành công! Vui lòng kiểm tra email để xác nhận.");
+    document.getElementById("signup-form").style.display = "none";
+    document.getElementById("login-form").style.display = "block";
   }
 }
 
-// Đăng nhập
 async function signIn() {
   const email = document.getElementById("login-email").value.trim();
   const password = document.getElementById("login-password").value.trim();
@@ -70,19 +76,31 @@ async function signIn() {
     return;
   }
 
-  const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+  showLoading("Đang đăng nhập...");
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  closeAlert();
 
   if (error) {
     showAlert("error", error.message);
   } else {
-    await showAlert("success", "Đăng nhập thành công!");
-    // Redirect hoặc làm gì đó sau đăng nhập thành công
-    // Ví dụ: window.location.href = "index.html";
+    showAlert("success", "Đăng nhập thành công!");
+    showLoggedInState();
   }
 }
 
-// Gán sự kiện cho các nút và link
-document.getElementById('btn-signup').addEventListener('click', signUp);
-document.getElementById('btn-signin').addEventListener('click', signIn);
-document.getElementById('toggle-to-signup').addEventListener('click', toggleForm);
-document.getElementById('toggle-to-signin').addEventListener('click', toggleForm);
+async function signOut() {
+  showLoading("Đang đăng xuất...");
+  await supabase.auth.signOut();
+  closeAlert();
+  showAlert("success", "Đăng xuất thành công!");
+  document.getElementById("login-form").style.display = "block";
+  document.getElementById("logged-in-state").style.display = "none";
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btn-signup').addEventListener('click', signUp);
+  document.getElementById('btn-signin').addEventListener('click', signIn);
+  document.getElementById('btn-signout').addEventListener('click', signOut);
+  document.getElementById('toggle-to-signup').addEventListener('click', toggleForm);
+  document.getElementById('toggle-to-signin').addEventListener('click', toggleForm);
+});

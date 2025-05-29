@@ -4,107 +4,26 @@
   <meta charset="UTF-8" />
   <title>TVB • Đăng nhập & Đăng ký</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
-  <!-- Thư viện -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.5/dist/supabase.min.js"></script>
-  
-  <!-- Font & Favicon -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="icon" href="logo.png" />
-  
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
-    body {
-      margin: 0; padding: 0;
-      background: linear-gradient(to right, #4e54c8, #8f94fb);
-      display: flex; align-items: center; justify-content: center;
-      min-height: 100vh;
-    }
-    .container {
-      background: white;
-      padding: 40px;
-      border-radius: 16px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      text-align: center;
-    }
-    .logo {
-      margin-bottom: 20px;
-    }
-    .logo img {
-      height: 60px;
-    }
-    h2 {
-      color: #333;
-      margin-bottom: 10px;
-    }
-    p {
-      font-size: 0.9rem;
-      color: #666;
-      margin-bottom: 25px;
-    }
-    input {
-      width: 100%;
-      padding: 14px 16px;
-      margin-bottom: 15px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-    input:focus {
-      border-color: #4e54c8;
-      outline: none;
-    }
-    button {
-      width: 100%;
-      padding: 14px;
-      background: #4e54c8;
-      color: white;
-      font-size: 1rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    button:hover {
-      background: #3b3fbd;
-    }
-    .toggle {
-      margin-top: 20px;
-      font-size: 0.9rem;
-    }
-    .toggle a {
-      color: #4e54c8;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <div class="logo">
-      <img src="logo.png" alt="TVB Logo" />
-    </div>
+    <div class="logo"><img src="logo.png" alt="Logo" height="60" /></div>
 
-    <!-- Đăng nhập -->
+    <!-- Login -->
     <div id="login-form">
       <h2>🔐 Đăng nhập</h2>
       <p>Chào mừng quay lại!</p>
       <input type="email" id="login-email" placeholder="Email" />
       <input type="password" id="login-password" placeholder="Mật khẩu" />
       <button id="btn-signin">Đăng nhập</button>
-      <div class="toggle">
-        Chưa có tài khoản? <a id="toggle-to-signup">Đăng ký</a>
-      </div>
+      <div class="toggle">Chưa có tài khoản? <a id="toggle-to-signup">Đăng ký</a></div>
     </div>
 
-    <!-- Đăng ký -->
+    <!-- Signup -->
     <div id="signup-form" style="display: none;">
       <h2>📝 Đăng ký</h2>
       <p>Tạo tài khoản mới</p>
@@ -112,9 +31,14 @@
       <input type="email" id="signup-email" placeholder="Email" />
       <input type="password" id="signup-password" placeholder="Mật khẩu" />
       <button id="btn-signup">Tạo tài khoản</button>
-      <div class="toggle">
-        Đã có tài khoản? <a id="toggle-to-signin">Đăng nhập</a>
-      </div>
+      <div class="toggle">Đã có tài khoản? <a id="toggle-to-signin">Đăng nhập</a></div>
+    </div>
+
+    <!-- Logged in -->
+    <div id="logged-in-state" style="display: none;">
+      <h2>👋 Chào mừng!</h2>
+      <p>Bạn đã đăng nhập thành công.</p>
+      <button id="btn-signout">Đăng xuất</button>
     </div>
   </div>
 
