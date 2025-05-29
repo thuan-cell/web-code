@@ -2,37 +2,36 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Supabase Auth Panel</title>
-  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 <body>
-  <div class="auth-container">
+  <div class="auth-container" style="max-width:400px;margin:auto;padding:20px;font-family:sans-serif;">
     <h1>🔐 Supabase Panel</h1>
 
-    <div class="auth-box">
+    <div class="auth-box" style="margin-bottom:20px;">
       <h2>Đăng ký</h2>
-      <input type="email" id="signup-email" placeholder="Email" />
-      <input type="password" id="signup-password" placeholder="Mật khẩu" />
-      <button onclick="signUp()">Đăng ký</button>
+      <input type="email" id="signup-email" placeholder="Email" style="width:100%;padding:8px;margin-bottom:8px;" />
+      <input type="password" id="signup-password" placeholder="Mật khẩu" style="width:100%;padding:8px;margin-bottom:8px;" />
+      <button onclick="signUp()" style="padding:10px 15px;">Đăng ký</button>
     </div>
 
-    <div class="auth-box">
+    <div class="auth-box" style="margin-bottom:20px;">
       <h2>Đăng nhập</h2>
-      <input type="email" id="login-email" placeholder="Email" />
-      <input type="password" id="login-password" placeholder="Mật khẩu" />
-      <button onclick="signIn()">Đăng nhập</button>
+      <input type="email" id="login-email" placeholder="Email" style="width:100%;padding:8px;margin-bottom:8px;" />
+      <input type="password" id="login-password" placeholder="Mật khẩu" style="width:100%;padding:8px;margin-bottom:8px;" />
+      <button onclick="signIn()" style="padding:10px 15px;">Đăng nhập</button>
     </div>
 
-    <div class="auth-box">
+    <div class="auth-box" style="margin-bottom:20px;">
       <h2>Thông tin người dùng</h2>
-      <button onclick="getUser()">Xem user</button>
-      <pre id="user-info"></pre>
+      <button onclick="getUser()" style="padding:10px 15px;margin-bottom:8px;">Xem user</button>
+      <pre id="user-info" style="background:#f4f4f4;padding:10px;height:150px;overflow:auto;"></pre>
     </div>
 
     <div class="auth-box">
-      <button onclick="signOut()">Đăng xuất</button>
+      <button onclick="signOut()" style="padding:10px 15px;">Đăng xuất</button>
     </div>
   </div>
 
