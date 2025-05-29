@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Supabase Auth</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Supabase Đăng nhập/Đăng ký</h1>
+
+    <section>
+      <h2>Đăng ký</h2>
+      <input type="email" id="signup-email" placeholder="Email">
+      <input type="password" id="signup-password" placeholder="Mật khẩu">
+      <button onclick="signUp()">Đăng ký</button>
+    </section>
+
+    <section>
+      <h2>Đăng nhập</h2>
+      <input type="email" id="login-email" placeholder="Email">
+      <input type="password" id="login-password" placeholder="Mật khẩu">
+      <button onclick="signIn()">Đăng nhập</button>
+    </section>
+
+    <section>
+      <h2>Thông tin người dùng</h2>
+      <button onclick="getUser()">Xem user</button>
+      <pre id="user-info"></pre>
+    </section>
+
+    <section>
+      <button onclick="signOut()">Đăng xuất</button>
+    </section>
+  </div>
+
+  <script src="auth.js"></script>
+</body>
+</html>
