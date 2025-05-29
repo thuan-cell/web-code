@@ -1,38 +1,39 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Supabase Auth</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supabase Auth Panel</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Supabase Đăng nhập/Đăng ký</h1>
+  <div class="auth-container">
+    <h1>🔐 Supabase Panel</h1>
 
-    <section>
+    <div class="auth-box">
       <h2>Đăng ký</h2>
-      <input type="email" id="signup-email" placeholder="Email">
-      <input type="password" id="signup-password" placeholder="Mật khẩu">
+      <input type="email" id="signup-email" placeholder="Email" />
+      <input type="password" id="signup-password" placeholder="Mật khẩu" />
       <button onclick="signUp()">Đăng ký</button>
-    </section>
+    </div>
 
-    <section>
+    <div class="auth-box">
       <h2>Đăng nhập</h2>
-      <input type="email" id="login-email" placeholder="Email">
-      <input type="password" id="login-password" placeholder="Mật khẩu">
+      <input type="email" id="login-email" placeholder="Email" />
+      <input type="password" id="login-password" placeholder="Mật khẩu" />
       <button onclick="signIn()">Đăng nhập</button>
-    </section>
+    </div>
 
-    <section>
+    <div class="auth-box">
       <h2>Thông tin người dùng</h2>
       <button onclick="getUser()">Xem user</button>
       <pre id="user-info"></pre>
-    </section>
+    </div>
 
-    <section>
+    <div class="auth-box">
       <button onclick="signOut()">Đăng xuất</button>
-    </section>
+    </div>
   </div>
 
   <script src="auth.js"></script>
