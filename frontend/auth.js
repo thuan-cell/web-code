@@ -1,13 +1,13 @@
-// Khai báo thông tin Supabase của bạn
+// Thay bằng thông tin Supabase thật của bạn
 const SUPABASE_URL = 'https://sbujprduupfyohscibck.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNidWpwcmR1dXBmeW9oc2NpYmNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1MDA1NDEsImV4cCI6MjA2NDA3NjU0MX0.nC7tUGNg8kUvKXdtNtaKZzpAyoLgMNBbCe4dXXx2VyE';
 
-// Tạo client supabase (đặt tên khác với thư viện)
+// Tạo client supabase
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Hiển thị popup alert với SweetAlert2
 function showAlert(type, message) {
-  Swal.fire({
+  return Swal.fire({
     icon: type,
     text: message,
     confirmButtonColor: '#4e54c8'
@@ -37,13 +37,11 @@ async function signUp() {
     showAlert("warning", "Vui lòng nhập họ và tên.");
     return;
   }
-
   if (!email || !password) {
     showAlert("warning", "Vui lòng nhập đầy đủ email và mật khẩu.");
     return;
   }
 
-  // Gọi API đăng ký
   const { data, error } = await supabaseClient.auth.signUp({
     email,
     password,
@@ -57,9 +55,8 @@ async function signUp() {
   if (error) {
     showAlert("error", error.message);
   } else {
-    showAlert("success", "Tạo tài khoản thành công! Vui lòng kiểm tra email để xác nhận.").then(() => {
-      toggleForm();
-    });
+    await showAlert("success", "Tạo tài khoản thành công! Vui lòng kiểm tra email để xác nhận.");
+    toggleForm();
   }
 }
 
@@ -73,16 +70,14 @@ async function signIn() {
     return;
   }
 
-  // Gọi API đăng nhập
   const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
 
   if (error) {
     showAlert("error", error.message);
   } else {
-    showAlert("success", "Đăng nhập thành công!").then(() => {
-      // Đổi trang sau khi đăng nhập
-      window.location.href = "index.html";
-    });
+    await showAlert("success", "Đăng nhập thành công!");
+    // Redirect hoặc làm gì đó sau đăng nhập thành công
+    // Ví dụ: window.location.href = "index.html";
   }
 }
 

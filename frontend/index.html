@@ -3,28 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <title>TVB • Đăng nhập & Đăng ký</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
   <!-- Thư viện -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.5/dist/supabase.min.js"></script>
-
+  
   <!-- Font & Favicon -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="icon" href="logo.png" />
-
+  
   <style>
     * {
       box-sizing: border-box;
       font-family: 'Inter', sans-serif;
     }
     body {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       background: linear-gradient(to right, #4e54c8, #8f94fb);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       min-height: 100vh;
     }
     .container {
@@ -33,7 +30,7 @@
       border-radius: 16px;
       width: 100%;
       max-width: 420px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
       text-align: center;
     }
     .logo {
@@ -108,7 +105,7 @@
     </div>
 
     <!-- Đăng ký -->
-    <div id="signup-form" style="display: none">
+    <div id="signup-form" style="display: none;">
       <h2>📝 Đăng ký</h2>
       <p>Tạo tài khoản mới</p>
       <input type="text" id="signup-fullname" placeholder="Họ và tên" />
