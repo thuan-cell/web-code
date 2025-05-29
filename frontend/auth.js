@@ -3,10 +3,6 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
 
-const SUPABASE_URL = 'https://sbujprduupfyohscibck.supabase.co';
-const SUPABASE_KEY = 'eyJ...'; // Sử dụng anon public key
-
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Hàm hiển thị thông báo
 function showAlert(type, message) {
