@@ -3,8 +3,10 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
 
+const SUPABASE_URL = 'https://sbujprduupfyohscibck.supabase.co';
+const SUPABASE_KEY = 'eyJ...'; // Sử dụng anon public key
 
-
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Hàm hiển thị thông báo
 function showAlert(type, message) {
@@ -15,7 +17,7 @@ function showAlert(type, message) {
   });
 }
 
-// Xử lý đăng nhập
+// Đăng nhập
 async function signIn() {
   const email = document.getElementById("login-email").value.trim();
   const password = document.getElementById("login-password").value.trim();
@@ -25,18 +27,18 @@ async function signIn() {
     return;
   }
 
-  const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    showAlert("error", error.message || "Đăng nhập thất bại.");
+    showAlert("error", error.message);
   } else {
     showAlert("success", "Đăng nhập thành công!").then(() => {
-      window.location.href = "index.html"; // 👉 Sửa đường dẫn nếu cần
+      window.location.href = "index.html";
     });
   }
 }
 
-// Xử lý đăng ký
+// Đăng ký
 async function signUp() {
   const email = document.getElementById("signup-email").value.trim();
   const password = document.getElementById("signup-password").value.trim();
@@ -46,22 +48,16 @@ async function signUp() {
     return;
   }
 
-  const { data, error } = await supabaseClient.auth.signUp({ email, password });
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password
+  });
 
   if (error) {
-    showAlert("error", error.message || "Đăng ký thất bại.");
+    showAlert("error", error.message);
   } else {
-    showAlert("success", "Tạo tài khoản thành công! Hãy kiểm tra email để xác nhận.")
-      .then(() => {
-        toggleForm();
-      });
+    showAlert("success", "Tạo tài khoản thành công! Kiểm tra email để xác nhận.").then(() => {
+      toggleForm();
+    });
   }
-}
-
-// Chuyển đổi form đăng nhập/đăng ký
-function toggleForm() {
-  const login = document.getElementById('login-form');
-  const signup = document.getElementById('signup-form');
-  login.style.display = login.style.display === 'none' ? 'block' : 'none';
-  signup.style.display = signup.style.display === 'none' ? 'block' : 'none';
 }
