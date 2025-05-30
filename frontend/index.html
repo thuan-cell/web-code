@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <title>TVB • Đăng nhập & Đăng ký</title>
+  <title> Đăng nhập & Đăng ký</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
@@ -33,13 +33,26 @@
       <button id="btn-signup">Tạo tài khoản</button>
       <div class="toggle">Đã có tài khoản? <a id="toggle-to-signin">Đăng nhập</a></div>
     </div>
+  </div>
 
-    <!-- Logged in -->
-    <div id="logged-in-state" style="display: none;">
-      <h2>👋 Chào mừng!</h2>
-      <p>Bạn đã đăng nhập thành công.</p>
-      <button id="btn-signout">Đăng xuất</button>
-    </div>
+  <!-- Logged in -->
+  <div id="logged-in-state" style="display: none;">
+    <header class="header">
+      <div class="logo-header">
+        <img src="logo.jpg" alt="Logo" height="40" />
+        <h1> Dashboard</h1>
+      </div>
+      <div class="user-info">
+        <span id="user-email">user@example.com</span>
+        <button id="btn-signout">Đăng xuất</button>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <h2>📊 Trang chính</h2>
+      <p>Chào mừng bạn đến với hệ thống quản lý!</p>
+      <!-- Thêm nội dung chính tại đây -->
+    </main>
   </div>
 
   <script src="auth.js"></script>

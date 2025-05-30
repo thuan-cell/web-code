@@ -3,6 +3,8 @@
 const supabaseUrl = 'https://ngccjkcvbrzhrghrehlr.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5nY2Nqa2N2YnJ6aHJnaHJlaGxyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1MjM1NDUsImV4cCI6MjA2NDA5OTU0NX0.AozgdihQHsyPsDyh0OX85sGEeIvxa2IxXf0PQPYlte4'; // Thay bằng anon key thật
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+// auth.js
+
 
 function showAlert(type, message) {
   Swal.fire({ icon: type, text: message, confirmButtonColor: '#4e54c8' });
@@ -17,24 +19,21 @@ function closeAlert() {
 }
 
 function toggleForm(event) {
-  const loginForm = document.getElementById('login-form');
-  const signupForm = document.getElementById('signup-form');
-  const loggedInState = document.getElementById('logged-in-state');
-  loginForm.style.display = 'none';
-  signupForm.style.display = 'none';
-  loggedInState.style.display = 'none';
+  document.getElementById('login-form').style.display = 'none';
+  document.getElementById('signup-form').style.display = 'none';
+  document.getElementById('logged-in-state').style.display = 'none';
 
   if (event.target.id === 'toggle-to-signup') {
-    signupForm.style.display = 'block';
+    document.getElementById('signup-form').style.display = 'block';
   } else {
-    loginForm.style.display = 'block';
+    document.getElementById('login-form').style.display = 'block';
   }
 }
 
-function showLoggedInState() {
-  document.getElementById('login-form').style.display = 'none';
-  document.getElementById('signup-form').style.display = 'none';
+function showLoggedInState(user) {
+  document.querySelector('.container').style.display = 'none';
   document.getElementById('logged-in-state').style.display = 'block';
+  document.getElementById('user-email').textContent = user.email;
 }
 
 async function insertProfile(user_id, fullname, email) {
@@ -84,7 +83,7 @@ async function signIn() {
     showAlert("error", error.message);
   } else {
     showAlert("success", "Đăng nhập thành công!");
-    showLoggedInState();
+    showLoggedInState(data.user);
   }
 }
 
@@ -93,8 +92,7 @@ async function signOut() {
   await supabase.auth.signOut();
   closeAlert();
   showAlert("success", "Đăng xuất thành công!");
-  document.getElementById("login-form").style.display = "block";
-  document.getElementById("logged-in-state").style.display = "none";
+  location.reload();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
